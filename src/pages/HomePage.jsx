@@ -37,14 +37,13 @@ const HomePage = () => {
           setMeasurements={setMeasurements}
           handleSubmit={handleSubmit}
         />
-
-        {isLoading ? (
-          <Box minH="600px">
+        <Box minH="42rem" mt="2rem">
+          {isLoading ? (
             <Spinner color="green.600" size="lg" />
-          </Box>
-        ) : (
-          <Results mto={mto} />
-        )}
+          ) : (
+            <Results mto={mto} />
+          )}
+        </Box>
       </VStack>
     </>
   );
