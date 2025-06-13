@@ -1,4 +1,4 @@
-import { VStack, Button, Spinner } from "@chakra-ui/react";
+import { VStack, Button, Spinner, Box } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import MeasurementsCard from "../components/MeasurementsCard";
 import MeasurementInputs from "../components/MeasurementInputs";
@@ -39,7 +39,9 @@ const HomePage = () => {
         />
 
         {isLoading ? (
-          <Spinner color="teal.500" size="lg" />
+          <Box minH="600px">
+            <Spinner color="green.600" size="lg" />
+          </Box>
         ) : (
           <Results mto={mto} />
         )}
