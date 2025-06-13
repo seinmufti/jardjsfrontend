@@ -94,7 +94,16 @@ const MeasurementInputs = ({ measurements, setMeasurements }) => {
                       minW="3ch"
                       w="3ch"
                       p="0.5rem 0"
-                      onChange={(e) => setQuantity(Number(e.target.value))}
+                      value={quantity}
+                      onChange={(e) => {
+                        const value = Number(e.target.value);
+                        setQuantity(value);
+                      }}
+                      onBlur={() => {
+                        if (quantity < 1) {
+                          setQuantity(1);
+                        }
+                      }}
                     />
                     <NumberInput.IncrementTrigger asChild>
                       <IconButton
@@ -102,7 +111,7 @@ const MeasurementInputs = ({ measurements, setMeasurements }) => {
                         size="sm"
                         color="green"
                         onClick={() => {
-                          setQuantity(quantity + 1);
+                          setQuantity((prev) => prev + 1);
                         }}
                       >
                         <LuPlus />
