@@ -45,6 +45,8 @@ const HomePage = () => {
           measurements={measurements}
           setMeasurements={setMeasurements}
         />
+        <Box h="1rem"></Box>
+
         <MeasurementsCard
           measurements={measurements}
           setMeasurements={setMeasurements}

@@ -56,12 +56,20 @@ const MeasurementsCard = ({ measurements, setMeasurements, handleSubmit }) => {
   };
 
   const handleMeasurementDelete = (index) => {
+    // filter out the measurement to delete
     const newMeasurements = tempMeasurements.filter(
       (measurement) => measurement.index !== index
     );
-    setTempMeasurements(newMeasurements);
+
+    // reset indexes
+    const resetMeasurements = newMeasurements.map((measurement, i) => ({
+      ...measurement,
+      index: i + 1,
+    }));
+
+    setTempMeasurements(resetMeasurements);
     // Update current measurements
-    setCurrentMeasurements(newMeasurements);
+    setCurrentMeasurements(resetMeasurements);
   };
 
   return (
@@ -113,8 +121,9 @@ const MeasurementsCard = ({ measurements, setMeasurements, handleSubmit }) => {
               <Table.Header>
                 <Table.Row>
                   <Table.ColumnHeader w={"10%"}>#</Table.ColumnHeader>
-                  <Table.ColumnHeader w={"35%"}>width</Table.ColumnHeader>
-                  <Table.ColumnHeader w={"35%"}>height</Table.ColumnHeader>
+                  <Table.ColumnHeader w={"30%"}>width</Table.ColumnHeader>
+                  <Table.ColumnHeader w={"30%"}>height</Table.ColumnHeader>
+                  <Table.ColumnHeader w={"10%"}>quantity</Table.ColumnHeader>
                   <Table.ColumnHeader w={"20%"}></Table.ColumnHeader>
                 </Table.Row>
               </Table.Header>
@@ -135,6 +144,7 @@ const MeasurementsCard = ({ measurements, setMeasurements, handleSubmit }) => {
                           <>
                             <Table.Cell>{measurement.w}</Table.Cell>
                             <Table.Cell>{measurement.h}</Table.Cell>
+                            <Table.Cell>{measurement.quantity}</Table.Cell>
                             <Table.Cell></Table.Cell>
                           </>
                         ) : (
@@ -175,6 +185,24 @@ const MeasurementsCard = ({ measurements, setMeasurements, handleSubmit }) => {
                                 </NumberInput.Root>
                               </InputGroup>
                             </Table.Cell>
+
+                            <Table.Cell>
+                              <NumberInput.Root
+                                value={measurement.quantity}
+                                min={1}
+                                defaultValue={0}
+                                onChange={(e) =>
+                                  handleTableInputEdit(
+                                    measurement.index,
+                                    "quantity",
+                                    Number(e.target.value)
+                                  )
+                                }
+                              >
+                                <NumberInput.Input fontSize={"16px"} />
+                              </NumberInput.Root>
+                            </Table.Cell>
+
                             {/* delete button */}
                             <Table.Cell>
                               <IconButton
