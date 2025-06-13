@@ -20,16 +20,14 @@ const Results = ({ mto, isLoading, isUpdated }) => {
           <Card.Header>
             <HStack justify="space-between">
               <Heading size="md">MTO Results</Heading>
-              <Box w="20%">
+              <Box minW="7rem">
                 <Tag.Root
                   size="sm"
                   colorPalette={isUpdated ? "green" : "red"}
                   w="100%"
                   justifyContent="center"
                 >
-                  <Tag.Label minW="50%">
-                    {isUpdated ? "updated" : "not updated"}
-                  </Tag.Label>
+                  <Tag.Label>{isUpdated ? "updated" : "not updated"}</Tag.Label>
                 </Tag.Root>
               </Box>
             </HStack>
