@@ -8,6 +8,10 @@ const HomePage = () => {
   const [measurements, setMeasurements] = useState([]);
   const [mto, setMto] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [submitedMeasurements, setSubmitedMeasurements] = useState([]);
+  const [isUpdated, setIsUpdated] = useState(false);
+  // Bool to change results component's height (less if not open)
+  const [isResultsOpen, setIsResultsOpen] = useState(false);
 
   const handleSubmit = () => {
     const cleanedMeasurements = measurements.map(({ index, ...rest }) => rest);
@@ -22,8 +26,17 @@ const HomePage = () => {
       .then((data) => {
         setMto(data.result);
         setIsLoading(false);
+        setIsResultsOpen(true);
+        setSubmitedMeasurements(measurements);
       });
   };
+
+  useEffect(() => {
+    const isSame =
+      JSON.stringify(submitedMeasurements) === JSON.stringify(measurements);
+
+    setIsUpdated(isSame);
+  }, [submitedMeasurements, measurements]);
 
   return (
     <>
@@ -37,12 +50,8 @@ const HomePage = () => {
           setMeasurements={setMeasurements}
           handleSubmit={handleSubmit}
         />
-        <Box minH="42rem" mt="2rem">
-          {isLoading ? (
-            <Spinner color="green.600" size="lg" />
-          ) : (
-            <Results mto={mto} />
-          )}
+        <Box minH={isResultsOpen ? "42rem" : "5rem"} mt="2rem">
+          <Results mto={mto} isLoading={isLoading} isUpdated={isUpdated} />
         </Box>
       </VStack>
     </>

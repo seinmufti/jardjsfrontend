@@ -1,7 +1,16 @@
-import { Card, Heading, HStack, VStack, Text } from "@chakra-ui/react";
+import {
+  Card,
+  Heading,
+  HStack,
+  VStack,
+  Text,
+  Tag,
+  Box,
+  Spinner,
+} from "@chakra-ui/react";
 import { useMediaQuery } from "@chakra-ui/react";
 
-const Results = ({ mto }) => {
+const Results = ({ mto, isLoading, isUpdated }) => {
   const [isMobile] = useMediaQuery("(max-width: 768px)");
 
   return (
@@ -9,10 +18,34 @@ const Results = ({ mto }) => {
       {Object.keys(mto).length != 0 && (
         <Card.Root size="sm" w="95vw">
           <Card.Header>
-            <Heading size="md">MTO Results</Heading>
+            <HStack justify="space-between">
+              <Heading size="md">MTO Results</Heading>
+              <Box w="20%">
+                <Tag.Root
+                  size="sm"
+                  colorPalette={isUpdated ? "green" : "red"}
+                  w="100%"
+                  justifyContent="center"
+                >
+                  <Tag.Label minW="50%">
+                    {isUpdated ? "updated" : "not updated"}
+                  </Tag.Label>
+                </Tag.Root>
+              </Box>
+            </HStack>
           </Card.Header>
           <Card.Body>
-            {!isMobile ? (
+            {isLoading ? (
+              <Card.Root>
+                <Card.Body
+                  justifyContent="center"
+                  alignItems="center"
+                  minH="10rem"
+                >
+                  <Spinner color="green.600" size="lg" />
+                </Card.Body>
+              </Card.Root>
+            ) : !isMobile ? (
               <HStack align={"stretch"}>
                 <Card.Root size="sm" textAlign="center" w="33%">
                   <Card.Header>
