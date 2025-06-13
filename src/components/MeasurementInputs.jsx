@@ -91,8 +91,8 @@ const MeasurementInputs = ({ measurements, setMeasurements }) => {
                     <NumberInput.Input
                       textAlign="center"
                       fontSize="lg"
-                      minW="3ch"
-                      w="3ch"
+                      minW="8ch"
+                      w="8ch"
                       p="0.5rem 0"
                       value={quantity}
                       onChange={(e) => {
