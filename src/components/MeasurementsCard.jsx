@@ -11,7 +11,12 @@ import {
 } from "@chakra-ui/react";
 import { MdEdit, MdCheck, MdClose, MdDelete } from "react-icons/md";
 
-const MeasurementsCard = ({ measurements, setMeasurements, handleSubmit }) => {
+const MeasurementsCard = ({
+  measurements,
+  setMeasurements,
+  handleSubmit,
+  submitButtonRef,
+}) => {
   const [editEnabled, setEditEnabled] = useState(false);
 
   const [tempMeasurements, setTempMeasurements] = useState([]);
@@ -227,7 +232,9 @@ const MeasurementsCard = ({ measurements, setMeasurements, handleSubmit }) => {
       </Card.Body>
       <Card.Footer h={"0rem"} justifyContent="center" justifyItems="center">
         {measurements.length != 0 && (
-          <Button onClick={() => handleSubmit()}>Calculate</Button>
+          <Button ref={submitButtonRef} onClick={() => handleSubmit()}>
+            Calculate
+          </Button>
         )}
       </Card.Footer>
     </Card.Root>

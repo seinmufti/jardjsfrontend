@@ -1,5 +1,5 @@
 import { VStack, Box } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import MeasurementsCard from "../components/MeasurementsCard";
 import MeasurementInputs from "../components/MeasurementInputs";
 import Results from "../components/Results";
@@ -13,8 +13,21 @@ const HomePage = () => {
   // Bool to change results component's height (less if not open)
   const [isResultsOpen, setIsResultsOpen] = useState(false);
 
+  const submitButtonRef = useRef();
+
+  // Scroll first time calculate button is clicked
+  useEffect(() => {
+    if (isResultsOpen) {
+      submitButtonRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [isResultsOpen]);
+
   const handleSubmit = () => {
     setIsResultsOpen(true);
+
+    // Scroll every time calculate button is clicked
+    submitButtonRef.current.scrollIntoView({ behavior: "smooth" });
+
     setIsLoading(true);
 
     const cleanedMeasurements = measurements.map(({ index, ...rest }) => rest);
@@ -53,6 +66,7 @@ const HomePage = () => {
           measurements={measurements}
           setMeasurements={setMeasurements}
           handleSubmit={handleSubmit}
+          submitButtonRef={submitButtonRef}
         />
         <Box minH={isResultsOpen ? "42rem" : "5rem"} mt="2rem">
           <Results
