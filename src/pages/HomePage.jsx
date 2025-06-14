@@ -1,4 +1,4 @@
-import { VStack, Button, Spinner, Box } from "@chakra-ui/react";
+import { VStack, Box } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import MeasurementsCard from "../components/MeasurementsCard";
 import MeasurementInputs from "../components/MeasurementInputs";
@@ -14,8 +14,10 @@ const HomePage = () => {
   const [isResultsOpen, setIsResultsOpen] = useState(false);
 
   const handleSubmit = () => {
-    const cleanedMeasurements = measurements.map(({ index, ...rest }) => rest);
+    setIsResultsOpen(true);
     setIsLoading(true);
+
+    const cleanedMeasurements = measurements.map(({ index, ...rest }) => rest);
 
     fetch("https://jardjsbackend-production.up.railway.app//jard", {
       method: "POST",
@@ -26,11 +28,11 @@ const HomePage = () => {
       .then((data) => {
         setMto(data.result);
         setIsLoading(false);
-        setIsResultsOpen(true);
         setSubmitedMeasurements(measurements);
       });
   };
 
+  // Compare between submitted and current measurements to see if it is the latest calculation
   useEffect(() => {
     const isSame =
       JSON.stringify(submitedMeasurements) === JSON.stringify(measurements);
@@ -53,7 +55,12 @@ const HomePage = () => {
           handleSubmit={handleSubmit}
         />
         <Box minH={isResultsOpen ? "42rem" : "5rem"} mt="2rem">
-          <Results mto={mto} isLoading={isLoading} isUpdated={isUpdated} />
+          <Results
+            isResultsOpen={isResultsOpen}
+            mto={mto}
+            isLoading={isLoading}
+            isUpdated={isUpdated}
+          />
         </Box>
       </VStack>
     </>

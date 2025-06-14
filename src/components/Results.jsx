@@ -10,12 +10,12 @@ import {
 } from "@chakra-ui/react";
 import { useMediaQuery } from "@chakra-ui/react";
 
-const Results = ({ mto, isLoading, isUpdated }) => {
+const Results = ({ isResultsOpen, mto, isLoading, isUpdated }) => {
   const [isMobile] = useMediaQuery("(max-width: 768px)");
 
   return (
     <>
-      {Object.keys(mto).length != 0 && (
+      {isResultsOpen && (
         <Card.Root size="sm" w="95vw">
           <Card.Header>
             <HStack justify="space-between">
